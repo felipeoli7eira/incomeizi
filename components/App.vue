@@ -15,7 +15,7 @@
                         </thead>
 
                         <tbody class="text-sm">
-                            <tr v-for="expense in read" :key="expense.id">
+                            <!-- <tr v-for="expense in read" :key="expense.id">
                                 <td>{{ expense.name }}</td>
                                 <td>{{ expense?.details }}</td>
                                 <td>{{ expense.amount }}</td>
@@ -29,42 +29,42 @@
                                         <Icon name="lucide:trash" class="icon" />
                                     </button>
                                 </td>
-                            </tr>
+                            </tr> -->
                         </tbody>
                     </table>
 
-                    <div class="flex items-center justify-center mt-5">
+                    <!-- <div class="flex items-center justify-center mt-5">
                         <div class="join">
                             <button class="join-item btn">«</button>
                             <button class="join-item btn">Página 1</button>
                             <button class="join-item btn">»</button>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
             </div>
 
-            <UpdateExpenseForm :ulid="expenseToUpadeUlid" />
+            <!-- <UpdateExpenseForm :ulid="expenseToUpadeUlid" /> -->
         </div>
     </client-only>
 </template>
 
 <script lang="ts" setup>
-    import { useExpensesStore } from "~/stores/modules/expenses";
-    import { Calculate } from "~/Enums/Calculate";
+    // import { useExpensesStore } from "~/stores/modules/expenses";
+    // import { Calculate } from "~/Enums/Calculate";
 
-    const { read } = useExpensesStore();
+    // const { read } = useExpensesStore();
 
-    const expenseToUpadeUlid = ref<string>('');
+    // const expenseToUpadeUlid = ref<string>('');
 
-    function openUpdateExpenseFormDialog(expenseUlid: string) {
-        expenseToUpadeUlid.value = expenseUlid;
+    // function openUpdateExpenseFormDialog(expenseUlid: string) {
+    //     expenseToUpadeUlid.value = expenseUlid;
 
-        console.log(expenseUlid)
+    //     console.log(expenseUlid)
 
-        const dialog = document.querySelector("#updateExpenseDialog");
+    //     const dialog = document.querySelector("#updateExpenseDialog");
 
-        if (dialog) {
-            dialog.open = true;
-        }
-    }
+    //     if (dialog) {
+    //         dialog.open = true;
+    //     }
+    // }
 </script>
