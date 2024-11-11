@@ -44,10 +44,11 @@
     }
 
     onMounted((): void => {
-        const displayBalanceSavedPreference = nuxtStorage.localStorage.getData(DISPLAY_BALANCE_PREFERENCE_KEY)
+        console.log(nuxtStorage)
+        // const displayBalanceSavedPreference = nuxtStorage.localStorage.getData(DISPLAY_BALANCE_PREFERENCE_KEY)
 
-        if (displayBalanceSavedPreference) {
-            displayBalance.value = displayBalanceSavedPreference
-        }
+        // if (displayBalanceSavedPreference) {
+        //     displayBalance.value = displayBalanceSavedPreference
+        // }
     })
 </script>
