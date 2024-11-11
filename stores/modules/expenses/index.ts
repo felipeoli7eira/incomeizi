@@ -42,15 +42,17 @@ export const useExpensesStore = defineStore("expenses", () => {
   function destroy() {}
 
   function saveState(): void {
-    nuxtStorage.localStorage.setData(EXPENSES_KEY_LOCALSTORAGE, data.value, TWO_YARS, "d");
+    // nuxtStorage.localStorage.setData(EXPENSES_KEY_LOCALSTORAGE, data.value, TWO_YARS, "d");
   }
 
   function loadState(): void {
-    const storedData = nuxtStorage.localStorage.getData(EXPENSES_KEY_LOCALSTORAGE);
+    // const storedData = nuxtStorage.localStorage.getData(EXPENSES_KEY_LOCALSTORAGE);
 
-    if (storedData) {
-      data.value = storedData;
-    }
+    // if (storedData) {
+    //   data.value = storedData;
+    // }
+
+    data.value = []
   }
 
   function find(ulid: string): Expense|null {
