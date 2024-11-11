@@ -48,6 +48,6 @@
 
         if (displayBalanceSavedPreference) {
             displayBalance.value = displayBalanceSavedPreference
-        // }
+        }
     })
 </script>
