@@ -17,12 +17,17 @@
 
 <script setup lang="ts">
     import { useExpensesStore } from '~/stores/modules/expenses'
+    import nuxtStorage from 'nuxt-storage'
 
     const displayBalance = ref(false)
     const expensesStore = useExpensesStore()
 
+    const DISPLAY_BALANCE_PREFERENCE_KEY = 'INCOMEIZI_DISPLAY_BALANCE_STATE_PREFERENCE'
+    const TWO_YARS = 325 * 2
+
     const changeDisplayBalance = (): void => {
         displayBalance.value = !displayBalance.value
+        saveDisplayBalancePreferenceStateOnLocalStorage()
     }
 
     function formatToCurrency(value: number): string {
@@ -31,4 +36,18 @@
             currency: 'BRL',
         }).format(value)
     }
+
+    function saveDisplayBalancePreferenceStateOnLocalStorage(): void {
+        nuxtStorage
+        .localStorage
+        .setData(DISPLAY_BALANCE_PREFERENCE_KEY, displayBalance.value, TWO_YARS, 'd')
+    }
+
+    onMounted((): void => {
+        const displayBalanceSavedPreference = nuxtStorage.localStorage.getData(DISPLAY_BALANCE_PREFERENCE_KEY)
+
+        if (displayBalanceSavedPreference) {
+            displayBalance.value = displayBalanceSavedPreference
+        }
+    })
 </script>
