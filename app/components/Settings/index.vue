@@ -11,7 +11,7 @@
                     <p class="mb-2">Defina a renda que será usada para calcular os gastos:</p>
 
                     <VeeField name="income" v-slot="{field}">
-                        <input name="income" v-bind="field" type="text" class="w-full input input-bordered" v-money="moneySettings" />
+                        <input v-bind="field" type="text" class="w-full input input-bordered" v-money="moneySettings" />
                     </VeeField>
 
                     <ErrorMessage name="income" />
