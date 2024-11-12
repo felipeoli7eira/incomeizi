@@ -5,7 +5,7 @@
         <div class="flex gap-x-1">
             <CreateExpenseForm />
             <Settings />
-            <ColorMode />
+            <PreferColorSchema />
         </div>
     </header>
 </template>
