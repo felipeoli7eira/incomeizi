@@ -16,7 +16,7 @@
 
                     <ErrorMessage name="income" />
 
-                    <button type="submit" @click="submit" class="btn btn-primary w-full mt-5">Salvar</button>
+                    <button type="submit" class="btn btn-primary w-full mt-5">Salvar</button>
                 </VeeForm>
 
                 <div class="modal-action">
