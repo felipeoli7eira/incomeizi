@@ -1,0 +1,9 @@
+services:
+  frontend:
+    container_name: incomeizi
+    build: .
+    ports:
+      - "8000:8000"
+    volumes:
+      - './app:/usr/frontend'
+      - /usr/frontend/node_modules # Permite que o container tenha controle do node_modules
