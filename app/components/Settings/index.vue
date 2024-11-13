@@ -4,20 +4,23 @@
             <Icon name="lucide:settings" class="icon" />
         </button>
 
-        <dialog id="settingsDialog" class="modal">
+        <dialog ref="settingsDialog" id="settingsDialog" class="modal">
             <div class="modal-box">
                 <h3 class="text-lg font-bold mb-5">Configurações</h3>
-                <VeeForm @submit.prevent="submit" :validation-schema="schema">
+                <form @submit.prevent="onSubmit">
                     <p class="mb-2">Defina a renda que será usada para calcular os gastos:</p>
-
-                    <VeeField name="income" v-slot="{field}">
-                        <input v-bind="field" type="text" class="w-full input input-bordered" v-money="moneySettings" />
-                    </VeeField>
-
-                    <ErrorMessage name="income" />
+                    <input
+                        type="text"
+                        v-money="moneySettings"
+                        name="income"
+                        class="input input-bordered w-full"
+                        placeholder="Ex.: 1200,00"
+                        v-model="incomeModel"
+                    />
+                    <p class="text-red-500" v-if="incomeErrorMessage">{{ incomeErrorMessage }}</p>
 
                     <button type="submit" class="btn btn-primary w-full mt-5">Salvar</button>
-                </VeeForm>
+                </form>
 
                 <div class="modal-action">
                     <form method="dialog">
@@ -31,20 +34,14 @@
 
 
 <script lang="ts" setup>
-    import { useForm } from 'vee-validate'
-    import { Field, Form, ErrorMessage } from 'vee-validate'
-    import { toTypedSchema } from '@vee-validate/zod'
-    import * as zod from 'zod'
-    import { moneySettings } from '~/plugins/v-money'
+    import useSettings from './hooks/useSettings'
 
-    const schema = toTypedSchema(zod.object({
-        income: zod.string({
-            required_error: 'Renda é obrigatória',
-            invalid_type_error: 'Renda está inválida'
-        }),
-    }))
-
-    function submit(formData) {
-        console.log(formData)
-    }
+    const {
+        moneySettings,
+        incomeModel,
+        incomeErrorMessage,
+        settingsDialog,
+        loadIncomeFromLocalStorage,
+        onSubmit
+    } = useSettings()
 </script>
