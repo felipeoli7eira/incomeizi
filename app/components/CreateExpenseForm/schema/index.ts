@@ -8,8 +8,8 @@ export const validationSchema = toTypedSchema(z.object({
         .max(20, {message: "Este campo deve ter no máximo 20 letras."}),
     details: z
         .optional(z.string()),
-    amount: z
-        .string({message: "Este campo deve ter um valor válido"}),
+    // amount: z
+    //     .string({message: "Este campo deve ter um valor válido"}),
     calculate: z
         .enum(["y", "n"], {message: "Escolha entre as opções disponíveis"})
 }));

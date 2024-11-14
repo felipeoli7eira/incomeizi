@@ -4,7 +4,7 @@
         <div class="max-w-screen-2xl mx-auto p-4">
             <Header />
 
-            <!-- <NuxtPage /> -->
+            <NuxtPage />
         </div>
     </div>
 </template>

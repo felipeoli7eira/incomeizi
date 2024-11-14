@@ -1,8 +1,8 @@
-import { defineStore } from "pinia";
-import { type Expense } from "~/types/Expense";
-import nuxtStorage from "nuxt-storage";
-import { ulid } from "ulid";
-import { Calculate } from "~/Enums/Calculate";
+import { defineStore } from 'pinia'
+import { type Expense } from '~/types/Expense'
+import nuxtStorage from 'nuxt-storage'
+import { ulid } from 'ulid'
+import { Calculate } from '~/Enums/Calculate'
 
 const EXPENSES_KEY_LOCALSTORAGE = "INCOMEIZI_DATA";
 const TWO_YARS = 325 * 2;
@@ -42,7 +42,7 @@ export const useExpensesStore = defineStore("expenses", () => {
   function destroy() {}
 
   function saveState(): void {
-    // nuxtStorage.localStorage.setData(EXPENSES_KEY_LOCALSTORAGE, data.value, TWO_YARS, "d");
+    nuxtStorage.localStorage.setData(EXPENSES_KEY_LOCALSTORAGE, data.value, TWO_YARS, 'd')
   }
 
   function loadState(): void {
