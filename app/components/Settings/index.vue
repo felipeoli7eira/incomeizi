@@ -11,13 +11,13 @@
                     <form @submit.prevent="onSubmit">
                         <p class="mb-2">Defina a renda que será usada para calcular os gastos:</p>
                         <input
-                            type="text"
                             v-money="moneySettings"
-                            name="income"
+                            type="text"
                             class="input input-bordered w-full"
                             placeholder="Ex.: 1200,00"
-                            v-model="incomeModel"
+                            v-model="incomeStore.income"
                         />
+
                         <p class="text-red-500" v-if="incomeErrorMessage">{{ incomeErrorMessage }}</p>
 
                         <button type="submit" class="btn btn-primary w-full mt-5">Salvar</button>
@@ -40,10 +40,9 @@
 
     const {
         moneySettings,
-        incomeModel,
         incomeErrorMessage,
-        settingsDialog,
-        loadIncomeFromLocalStorage,
-        onSubmit
+        onSubmit,
+        incomeStore,
+        settingsDialog
     } = useSettings()
 </script>

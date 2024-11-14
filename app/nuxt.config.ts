@@ -20,5 +20,6 @@ export default defineNuxtConfig({
   server: {
     host: '0', // predefinida como: localhost
     port: 8000 // predefinida como: 3000
-  }
+  },
+  ssr: false
 })
