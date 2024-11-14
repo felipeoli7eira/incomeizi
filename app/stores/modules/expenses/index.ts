@@ -3,24 +3,29 @@ import { type Expense } from '~/types/Expense'
 import nuxtStorage from 'nuxt-storage'
 import { ulid } from 'ulid'
 import { Calculate } from '~/Enums/Calculate'
+import { useIncomeStore } from './../income'
 
 const EXPENSES_KEY_LOCALSTORAGE = "INCOMEIZI_DATA";
 const TWO_YARS = 325 * 2;
 
 export const useExpensesStore = defineStore("expenses", () => {
   const data = ref<Expense[]>([]);
-
   const read = computed(() => data);
+  const incomeStore = useIncomeStore()
 
-  const balance = computed((): number =>
-    data.value.reduce((accumulator: number, currentValue: Expense) => {
+  const balance = computed((): number => {
+    const expensesSum = data.value.reduce((accumulator: number, currentValue: Expense) => {
       if (Calculate[currentValue.calculate] === Calculate.y) {
-        accumulator = accumulator + parseFloat(currentValue.amount);
+        accumulator += currentValue.amount
       }
 
-      return accumulator;
+      return accumulator
     }, 0)
-  );
+
+    const income = incomeStore.parsedIncome()
+
+    return income - expensesSum
+  });
 
   function create(payload: Expense) {
     payload.id = ulid();
@@ -46,13 +51,10 @@ export const useExpensesStore = defineStore("expenses", () => {
   }
 
   function loadState(): void {
-    // const storedData = nuxtStorage.localStorage.getData(EXPENSES_KEY_LOCALSTORAGE);
-
-    // if (storedData) {
-    //   data.value = storedData;
-    // }
-
-    data.value = []
+    const storedData = nuxtStorage.localStorage.getData(EXPENSES_KEY_LOCALSTORAGE)
+    if (storedData) {
+      data.value = storedData
+    }
   }
 
   function find(ulid: string): Expense|null {
@@ -66,8 +68,10 @@ export const useExpensesStore = defineStore("expenses", () => {
     create,
     update,
     destroy,
-    read,
     find,
+    read,
     balance,
+    data,
+    formatFromNummberToCurrencyBrlString: incomeStore.formatIncome
   };
 });

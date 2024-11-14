@@ -42,6 +42,8 @@ export const useIncomeStore = defineStore('income', () => {
     return {
         income,
         loadIncomeStoreValue,
-        saveIncomeOnLocalStorage
+        saveIncomeOnLocalStorage,
+        parsedIncome,
+        formatIncome
     }
 })

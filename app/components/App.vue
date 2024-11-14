@@ -1,70 +1,66 @@
 <template>
-    <client-only>
-        <div class="mt-10 rounded-md">
-            <div class="shadow-xl p-5 rounded-md">
-                <div class="overflow-x-auto">
-                    <table class="table">
-                        <thead class="text-base">
-                            <tr>
-                                <th>Despesa</th>
-                                <th>Descrição</th>
-                                <th>Valor</th>
-                                <th>Calcular</th>
-                                <th></th>
-                            </tr>
-                        </thead>
+    <div class="mt-10 rounded-md">
+        <div class="shadow-xl p-5 rounded-md">
+            <div class="overflow-x-auto">
+                <table class="table">
+                    <thead class="text-base">
+                        <tr>
+                            <th>Despesa</th>
+                            <th>Descrição</th>
+                            <th>Valor</th>
+                            <th>Calcular</th>
+                            <th></th>
+                        </tr>
+                    </thead>
 
-                        <tbody class="text-sm">
-                            <!-- <tr v-for="expense in read" :key="expense.id">
-                                <td>{{ expense.name }}</td>
-                                <td>{{ expense?.details }}</td>
-                                <td>{{ expense.amount }}</td>
-                                <td>{{ Calculate[expense.calculate] }}</td>
-                                <td class="space-x-1">
-                                    <button class="btn btn-sm" @click="() => openUpdateExpenseFormDialog(expense.id)">
-                                        <Icon name="lucide:chart-bar-decreasing" class="icon" />
-                                    </button>
+                    <tbody class="text-sm">
+                        <tr v-for="expense in expensesStore.data" :key="expense.id">
+                            <td>{{ expense.name }}</td>
+                            <td>{{ expense?.details }}</td>
+                            <td>{{ expensesStore.formatFromNummberToCurrencyBrlString(expense.amount) }}</td>
+                            <td>{{ Calculate[expense.calculate] }}</td>
+                            <td class="space-x-1">
+                                <button class="btn btn-sm" @click="() => openUpdateExpenseFormDialog(expense.id)">
+                                    <Icon name="lucide:chart-bar-decreasing" class="icon" />
+                                </button>
 
-                                    <button class="btn btn-sm">
-                                        <Icon name="lucide:trash" class="icon" />
-                                    </button>
-                                </td>
-                            </tr> -->
-                        </tbody>
-                    </table>
+                                <button type="button" class="btn btn-sm">
+                                    <Icon name="lucide:trash" class="icon" />
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
 
-                    <!-- <div class="flex items-center justify-center mt-5">
-                        <div class="join">
-                            <button class="join-item btn">«</button>
-                            <button class="join-item btn">Página 1</button>
-                            <button class="join-item btn">»</button>
-                        </div>
-                    </div> -->
-                </div>
+                <!-- <div class="flex items-center justify-center mt-5">
+                    <div class="join">
+                        <button class="join-item btn">«</button>
+                        <button class="join-item btn">Página 1</button>
+                        <button class="join-item btn">»</button>
+                    </div>
+                </div> -->
             </div>
-
-            <!-- <UpdateExpenseForm :ulid="expenseToUpadeUlid" /> -->
         </div>
-    </client-only>
+
+        <UpdateExpenseForm :ulid="expenseToUpadeUlid" />
+    </div>
 </template>
 
 <script lang="ts" setup>
-    // import { useExpensesStore } from "~/stores/modules/expenses";
-    // import { Calculate } from "~/Enums/Calculate";
+    import { useExpensesStore } from '~/stores/modules/expenses'
+    import { Calculate } from '~/Enums/Calculate'
 
-    // const { read } = useExpensesStore();
+    const expensesStore = useExpensesStore()
+    const expenseToUpadeUlid = ref('')
 
-    // const expenseToUpadeUlid = ref<string>('');
+    function openUpdateExpenseFormDialog(expenseUlid: string) {
+        console.log(expenseUlid)
+        expenseToUpadeUlid.value = expenseUlid
 
-    // function openUpdateExpenseFormDialog(expenseUlid: string) {
-    //     expenseToUpadeUlid.value = expenseUlid;
+        const dialog = document.querySelector('#updateExpenseDialog')
 
-    //     console.log(expenseUlid)
-
-    //     const dialog = document.querySelector("#updateExpenseDialog");
-
-    //     if (dialog) {
-    //         dialog.open = true;
-    //     }
-    // }
+        if (dialog) {
+            dialog.open = true
+        }
+    }
 </script>
