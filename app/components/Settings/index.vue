@@ -1,21 +1,21 @@
 <template>
     <ClientOnly>
         <div class="settings-component">
-            <button class="btn btn-primary" type="button" onclick="settingsDialog.showModal()">
+            <button class="btn btn-primary" type="button" @click="openSettingsDialog">
                 <Icon name="lucide:settings" class="icon" />
             </button>
 
             <dialog ref="settingsDialog" id="settingsDialog" class="modal">
                 <div class="modal-box">
-                    <h3 class="text-lg font-bold mb-5">Configurações</h3>
+                    <h3 class="text-lg font-bold">Configurações</h3>
+                    <p class="mb-5">Defina a renda que será usada para calcular os gastos</p>
                     <form @submit.prevent="onSubmit">
-                        <p class="mb-2">Defina a renda que será usada para calcular os gastos:</p>
                         <input
                             v-money="moneySettings"
                             type="text"
                             class="input input-bordered w-full"
                             placeholder="Ex.: 1200,00"
-                            v-model="incomeStore.income"
+                            v-model="incomeModelInput"
                         />
 
                         <p class="text-red-500" v-if="incomeErrorMessage">{{ incomeErrorMessage }}</p>
@@ -41,8 +41,10 @@
     const {
         moneySettings,
         incomeErrorMessage,
-        onSubmit,
         incomeStore,
-        settingsDialog
+        settingsDialog,
+        incomeModelInput,
+        onSubmit,
+        openSettingsDialog
     } = useSettings()
 </script>

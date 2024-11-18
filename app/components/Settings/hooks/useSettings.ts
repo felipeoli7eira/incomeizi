@@ -7,36 +7,58 @@ export default function useSettings() {
     const incomeErrorMessage = ref('')
     const settingsDialog = ref<HTMLDialogElement | null>(null)
     const incomeStore = useIncomeStore()
+    const incomeModelInput = ref('')
 
     function onSubmit(): void {
-        if (incomeStore.income === '0,00') {
+        if (incomeModelInput.value === '0,00') {
             incomeErrorMessage.value = 'Renda não pode ser zero'
             return
         }
 
-        let parsedIncome = parseFloat(incomeStore.income.replaceAll('.', '').replace(',', '.'))
+        let parsedIncome = parseFloat(incomeModelInput.value.replaceAll('.', '').replace(',', '.'))
 
         if (isNaN(parsedIncome) || parsedIncome < 0) {
             incomeErrorMessage.value = 'Renda inválida'
             return
         }
 
+        incomeStore.income = incomeModelInput.value
+
         incomeStore.saveIncomeOnLocalStorage()
 
         toast.success('Renda atualizada com sucesso')
 
+        closeSettingsDialog()
+    }
+
+    function reflectIncomeStoreValueOnIncomeModelInput(): void {
+        let storedValue = incomeStore.getIncomeFromLocalStorage()
+
+        incomeModelInput.value = incomeStore.formatIncome(storedValue)
+    }
+
+    function openSettingsDialog(): void {
+        settingsDialog.value?.showModal()
+    }
+
+    function closeSettingsDialog(): void {
         settingsDialog.value?.close()
     }
 
-    onMounted(() => setTimeout(
-        () => incomeStore.loadIncomeStoreValue(), 1
-    ))
+    onMounted((): void => {
+        setTimeout((): void => {
+            incomeStore.loadIncomeStoreValue()
+            reflectIncomeStoreValueOnIncomeModelInput()
+        }, 100)
+    })
 
     return {
         moneySettings,
         incomeErrorMessage,
         settingsDialog,
         incomeStore,
-        onSubmit
+        incomeModelInput,
+        onSubmit,
+        openSettingsDialog
     }
 }
