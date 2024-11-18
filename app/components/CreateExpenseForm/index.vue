@@ -1,16 +1,16 @@
 <template>
     <div id="add-expense-form-component">
-        <button type="button" class="btn btn-primary" onclick="createExpenseDialog.showModal()">
+        <button type="button" class="btn btn-primary" @click="openFormDialog">
             <Icon name="lucide:circle-plus" class="icon" />
         </button>
 
-        <dialog ref="createExpenseFormDialog" id="createExpenseDialog" class="modal">
+        <dialog ref="formDialog" id="createExpenseDialog" class="modal">
             <div class="modal-box">
                 <h3 class="text-lg font-bold">Nova despesa</h3>
-                <p class="py-4">Cadastre uma nova despesa</p>
+                <p class="pb-4">Cadastre uma nova despesa</p>
 
                 <label class="mt-3 input input-bordered flex items-center gap-2 text-sm mb-3">
-                    Valor: <input v-model="amountModel" v-money="moneySettings" type="text" name="amount" class="grow text-sm" placeholder="Ex.: 1200,00" />
+                    Valor: <input v-model="amountModelInput" v-money="moneySettings" type="text" name="amount" class="grow text-sm" placeholder="Ex.: 1200,00" />
                 </label>
 
                 <VeeForm @submit="create" :validation-schema="validationSchema" class="grid">
@@ -50,11 +50,13 @@
 <script setup lang="ts">
     import { moneySettings } from '~/plugins/v-money'
     import { validationSchema } from "./schema";
-    import useCreateExpenseForm from "./useCreateExpenseForm";
+    import useCreateExpenseForm from "./hooks/useCreateExpenseForm";
 
     const {
+        amountModelInput,
+        formDialog,
         create,
-        amountModel,
-        createExpenseFormDialog
+        openFormDialog,
+        closeFormDialog,
     } = useCreateExpenseForm();
 </script>

@@ -5,10 +5,9 @@ import { ulid } from 'ulid'
 import { Calculate } from '~/Enums/Calculate'
 import { useIncomeStore } from './../income'
 
-const EXPENSES_KEY_LOCALSTORAGE = "INCOMEIZI_DATA";
-const TWO_YARS = 325 * 2;
+const EXPENSES_KEY_LOCALSTORAGE = 'INCOMEIZI_DATA'
 
-export const useExpensesStore = defineStore("expenses", () => {
+export const useExpensesStore = defineStore('expenses', () => {
   const data = ref<Expense[]>([]);
   const read = computed(() => data);
   const incomeStore = useIncomeStore()
@@ -28,11 +27,9 @@ export const useExpensesStore = defineStore("expenses", () => {
   });
 
   function create(payload: Expense) {
-    payload.id = ulid();
-
-    data.value.push(payload);
-
-    saveState();
+    payload.id = ulid()
+    data.value.push(payload)
+    saveState()
   }
 
   function update(ulid: string, payload: Expense) {
@@ -47,7 +44,7 @@ export const useExpensesStore = defineStore("expenses", () => {
   function destroy() {}
 
   function saveState(): void {
-    nuxtStorage.localStorage.setData(EXPENSES_KEY_LOCALSTORAGE, data.value, TWO_YARS, 'd')
+    nuxtStorage.localStorage.setData(EXPENSES_KEY_LOCALSTORAGE, data.value, 325 * 2, 'd')
   }
 
   function loadState(): void {
