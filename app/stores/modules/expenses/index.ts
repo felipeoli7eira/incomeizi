@@ -24,7 +24,7 @@ export const useExpensesStore = defineStore('expenses', () => {
     const income = incomeStore.parsedIncome()
 
     return income - expensesSum
-  });
+  })
 
   function create(payload: Expense) {
     payload.id = ulid()

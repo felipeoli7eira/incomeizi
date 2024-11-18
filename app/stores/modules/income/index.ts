@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
 import nuxtStorage from 'nuxt-storage'
+import { formatToMonetaryString, parseMonetaryString } from '~/helpers/parsers'
 
 export const useIncomeStore = defineStore('income', () => {
 
@@ -31,7 +32,7 @@ export const useIncomeStore = defineStore('income', () => {
     }
 
     function parsedIncome(): number {
-        return parseFloat(income.value.replaceAll('.', '').replace(',', '.'))
+        return parseMonetaryString(income.value)
     }
 
     function loadIncomeStoreValue(): void {
