@@ -44,6 +44,7 @@
         incomeStore,
         settingsDialog,
         incomeModelInput,
+
         onSubmit,
         openSettingsDialog
     } = useSettings()
