@@ -17,7 +17,7 @@
                         <tr v-for="expense in expensesStore.data" :key="expense.id">
                             <td>{{ expense.name }}</td>
                             <td>{{ expense?.details }}</td>
-                            <td>{{ expensesStore.formatFromNummberToCurrencyBrlString(expense.amount) }}</td>
+                            <td>{{ formatToMonetaryString(expense.amount) }}</td>
                             <td>{{ Calculate[expense.calculate] }}</td>
                             <td class="space-x-1">
                                 <button class="btn btn-sm" @click="() => openUpdateExpenseFormDialog(expense.id)">
@@ -49,12 +49,12 @@
 <script lang="ts" setup>
     import { useExpensesStore } from '~/stores/modules/expenses'
     import { Calculate } from '~/Enums/Calculate'
+    import { formatToMonetaryString } from '~/helpers/parsers'
 
     const expensesStore = useExpensesStore()
     const expenseToUpadeUlid = ref('')
 
     function openUpdateExpenseFormDialog(expenseUlid: string) {
-        console.log(expenseUlid)
         expenseToUpadeUlid.value = expenseUlid
 
         const dialog = document.querySelector('#updateExpenseDialog')

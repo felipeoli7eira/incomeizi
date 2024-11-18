@@ -4,8 +4,20 @@
             <h3 class="text-lg m-0 font-bold">Atualização de dados</h3>
             <p class="pb-4 mt-0 text-sm">Atualize as informações da sua despesa</p>
 
+            <label class="mt-3 input input-bordered flex items-center gap-2 text-sm">
+                Valor: <input
+                    v-model="expenseForm.amount"
+                    v-money="moneySettings"
+                    type="text"
+                    class="grow text-sm"
+                    placeholder="Ex.: 1200,00"
+                />
+            </label>
+
+            <p v-if="amountErrorMessage.length" class="m-0 text-red-500 text-sm">{{ amountErrorMessage }}</p>
+
             <VeeForm @submit="onSubmit" class="grid">
-                <label class="input input-bordered flex items-center gap-2 text-sm">
+                <label class="input input-bordered flex items-center gap-2 text-sm mt-3">
                     Depesa: <input
                         type="text"
                         @input="({ target }) => setFieldValue('name', target?.value ?? '')"
@@ -26,18 +38,6 @@
                 </label>
 
                 <p v-if="errors.details" class="m-0 text-red-500 text-sm">{{ errors.details }}</p>
-
-                <label class="mt-3 input input-bordered flex items-center gap-2 text-sm">
-                    Valor: <input
-                        type="text"
-                        class="grow text-sm"
-                        v-model="expenseForm.amount"
-                        placeholder="Ex.: 1200,00"
-                        @input="({ target }) => setFieldValue('amount', target?.value ?? '')"
-                    />
-                </label>
-
-                <p v-if="errors.amount" class="m-0 text-red-500 text-sm">{{ errors.amount }}</p>
 
                 <VeeField @change="({ target }) => setFieldValue('calculate', target?.value)" as="select" v-model="expenseForm.calculate" name="calculate" class="mt-3 select select-bordered w-full text-sm">
                     <option value="y">Sim</option>
@@ -61,73 +61,82 @@
 </template>
 
 <script setup lang="ts">
-    import { defineProps } from "vue";
-    import { useExpensesStore } from "~/stores/modules/expenses";
-    import { z } from "zod";
-    import { type Expense } from "~/types/Expense";
-    import { useForm } from "vee-validate";
-
-    const dialog = useTemplateRef("updateExpenseDialog");
+    import { defineProps } from 'vue'
+    import { moneySettings } from '~/plugins/v-money'
+    import { useExpensesStore } from '~/stores/modules/expenses'
+    import { toast } from '@steveyuowo/vue-hot-toast'
+    import { z } from 'zod'
+    import { type Expense } from '~/types/Expense'
+    import { useForm } from 'vee-validate'
+    import { formatToMonetaryString, parseMonetaryString } from '~/helpers/parsers'
+    import { toTypedSchema } from '@vee-validate/zod'
+    import { isZeroNumberValue, isZeroStringValue } from '~/helpers/validators'
 
     const props = defineProps({
         ulid: {
             type: String,
             required: true
         }
-    });
+    })
 
-    const expensesStore = useExpensesStore();
-
+    const dialog = useTemplateRef('updateExpenseDialog')
+    const expensesStore = useExpensesStore()
     const expenseForm = reactive({
-        name: "",
-        details: "",
-        amount: 0,
-        calculate: "",
-        id: ""
-    });
+        name: '',
+        details: '',
+        amount: '0,00',
+        calculate: '',
+        id: ''
+    })
+    const amountErrorMessage = ref('')
 
-    const selectedExpense = computed(() => expensesStore.find(props.ulid));
+    const selectedExpense = computed(() => expensesStore.find(props.ulid))
 
     const { handleSubmit, setValues, setFieldValue, errors } = useForm({
         validationSchema: toTypedSchema(z.object({
             name: z
-                .string({message: "Este campo deve ser um texto."})
-                .min(3, {message: "Este campo deve ter no mínimo 3 letras."})
-                .max(20, {message: "Este campo deve ter no máximo 20 letras."}),
+                .string({message: 'Este campo deve ser um texto'})
+                .min(3, {message: 'Este campo deve ter no mínimo 3 letras'})
+                .max(20, {message: 'Este campo deve ter no máximo 20 letras'}),
             details: z.optional(z.string()),
-            amount: z.string({message: "Este campo deve ter um valor válido"}),
-            calculate: z.enum(["y", "n"], {message: "Escolha entre as opções disponíveis"})
+            calculate: z.enum(['y', 'n'], {message: 'Escolha entre as opções disponíveis'})
         }))
-    });
+    })
 
-    watch(selectedExpense, (selected: Expense | null) => {
+    watch(selectedExpense, (selected: Expense|null): void => {
         if (selected) {
             setValues({
-                name: selected.name || "",
-                details: selected.details || "",
-                amount: selected.amount.toString() || "",
-                calculate: selected.calculate || ""
-            });
+                name: selected.name,
+                details: selected.details,
+                calculate: selected.calculate
+            })
 
-            expenseForm.name = selected.name;
-            expenseForm.details = selected.details;
-            expenseForm.amount = selected.amount;
-            expenseForm.calculate = selected.calculate;
-            expenseForm.id = selected.id;
+            expenseForm.name = selected.name
+            expenseForm.details = selected.details
+            expenseForm.amount = formatToMonetaryString(selected.amount)
+            expenseForm.calculate = selected.calculate
+            expenseForm.id = selected.id
         }
-    });
+    })
 
     function closeDialog(): void {
         if (dialog.value) {
-            dialog.value.open = false;
+            dialog.value.open = false
         }
     }
 
     const onSubmit = handleSubmit((formData: Expense) => {
         if (selectedExpense.value?.id) {
-            expensesStore.update(selectedExpense.value.id, formData);
+            if (isZeroStringValue(expenseForm.amount) || isZeroNumberValue(parseMonetaryString(expenseForm.amount))) {
+                amountErrorMessage.value = 'O campo valor não pode ser zero'
+                return
+            }
+
+            formData.amount = parseMonetaryString(expenseForm.amount)
+            expensesStore.update(selectedExpense.value.id, formData)
+            toast.success('Despesa atualizada com sucesso')
+            closeDialog()
         }
 
-        closeDialog();
-    });
+    })
 </script>

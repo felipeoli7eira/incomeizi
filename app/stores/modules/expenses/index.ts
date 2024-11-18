@@ -32,12 +32,12 @@ export const useExpensesStore = defineStore('expenses', () => {
     saveState()
   }
 
-  function update(ulid: string, payload: Expense) {
-    let index = data.value.findIndex(e => e.id === ulid);
+  function update(ulid: string, payload: Expense):void {
+    let index = data.value.findIndex(e => e.id === ulid)
 
     if (index !== -1) {
-      data.value[index] = { ...data.value[index], ...payload };
-      saveState();
+      data.value[index] = { ...data.value[index], ...payload }
+      saveState()
     }
   }
 
@@ -55,8 +55,7 @@ export const useExpensesStore = defineStore('expenses', () => {
   }
 
   function find(ulid: string): Expense|null {
-    const expense = data.value.find((expense) => expense.id === ulid);
-    return expense || null;
+    return data.value.find((expense: Expense) => expense.id === ulid) || null
   }
 
   loadState();
@@ -69,6 +68,5 @@ export const useExpensesStore = defineStore('expenses', () => {
     read,
     balance,
     data,
-    formatFromNummberToCurrencyBrlString: incomeStore.formatIncome
   };
 });
