@@ -24,7 +24,7 @@
                                     <Icon name="lucide:chart-bar-decreasing" class="icon" />
                                 </button>
 
-                                <button type="button" class="btn btn-sm">
+                                <button type="button" class="btn btn-sm" @click="() => openDeleteExpenseFormDialog(expense.id)">
                                     <Icon name="lucide:trash" class="icon" />
                                 </button>
                             </td>
@@ -42,6 +42,7 @@
             </div>
         </div>
 
+        <DeleteExpenseDialog :ulid="expenseToDeleteUlid" />
         <UpdateExpenseForm :ulid="expenseToUpadeUlid" />
     </div>
 </template>
@@ -52,12 +53,24 @@
     import { formatToMonetaryString } from '~/helpers/parsers'
 
     const expensesStore = useExpensesStore()
+
     const expenseToUpadeUlid = ref('')
+    const expenseToDeleteUlid = ref('')
 
     function openUpdateExpenseFormDialog(expenseUlid: string) {
         expenseToUpadeUlid.value = expenseUlid
 
         const dialog = document.querySelector('#updateExpenseDialog')
+
+        if (dialog) {
+            dialog.open = true
+        }
+    }
+
+    function openDeleteExpenseFormDialog(expenseUlid: string) {
+        expenseToDeleteUlid.value = expenseUlid
+
+        const dialog = document.querySelector('#deleteExpenseDialog')
 
         if (dialog) {
             dialog.open = true

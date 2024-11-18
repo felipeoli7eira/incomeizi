@@ -41,7 +41,11 @@ export const useExpensesStore = defineStore('expenses', () => {
     }
   }
 
-  function destroy() {}
+  function destroy(ulid: string): void {
+    let expensesExceptSelectedToDestroy = data.value.filter((expense: Expense) => expense.id !== ulid)
+    data.value = expensesExceptSelectedToDestroy
+    saveState()
+  }
 
   function saveState(): void {
     nuxtStorage.localStorage.setData(EXPENSES_KEY_LOCALSTORAGE, data.value, 325 * 2, 'd')
