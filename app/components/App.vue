@@ -1,6 +1,6 @@
 <template>
     <div class="mt-10 rounded-md">
-        <div class="shadow-xl p-5 rounded-md">
+        <div class="shadow-xl rounded-md">
             <div class="overflow-x-auto">
                 <table class="table">
                     <thead class="text-base">
@@ -16,10 +16,10 @@
                     <tbody class="text-sm">
                         <tr v-for="expense in expensesStore.data" :key="expense.id">
                             <td>{{ expense.name }}</td>
-                            <td>{{ expense?.details }}</td>
+                            <td>{{ cutLongDetails(expense?.details) }}</td>
                             <td>{{ formatToMonetaryString(expense.amount) }}</td>
                             <td>{{ Calculate[expense.calculate] }}</td>
-                            <td class="space-x-1">
+                            <td class="md:space-x-1 space-y-1 md:space-y-0">
                                 <button class="btn btn-sm" @click="() => openUpdateExpenseFormDialog(expense.id)">
                                     <Icon name="lucide:chart-bar-decreasing" class="icon" />
                                 </button>
@@ -75,5 +75,13 @@
         if (dialog) {
             dialog.open = true
         }
+    }
+
+    function cutLongDetails(details?: string) {
+        if (details && details.length > 50) {
+            return details.slice(0, 50).concat('...')
+        }
+
+        return details
     }
 </script>

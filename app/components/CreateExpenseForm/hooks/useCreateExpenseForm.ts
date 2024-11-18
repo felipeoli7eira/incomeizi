@@ -51,6 +51,12 @@ export default function useCreateExpenseForm() {
   }
 
   function resetForm(): void {
+    const form = document.querySelector('#createExpenseDialog form')
+
+    if (form) {
+      form.reset()
+    }
+
     amountModelInput.value = '0,00'
     amountErrorMessage.value = ''
   }
