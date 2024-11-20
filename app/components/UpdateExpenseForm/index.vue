@@ -1,6 +1,6 @@
 <template>
     <dialog ref="updateExpenseDialog" id="updateExpenseDialog" class="modal">
-        <div class="modal-box">
+        <div class="modal-box grid">
             <h3 class="text-lg m-0 font-bold">Atualização de dados</h3>
             <p class="pb-4 mt-0 text-sm">Atualize as informações da sua despesa</p>
 
