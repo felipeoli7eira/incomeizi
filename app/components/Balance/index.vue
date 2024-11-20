@@ -1,6 +1,6 @@
 <template>
     <ClientOnly>
-        <div class="flex items-stretch space-x-1">
+        <div class="flex items-stretch space-x-1 w-full justify-between md:justify-start">
             <h1 class="text-lg p-2 relative">
                 <p>Saldo: {{ formatToMonetaryString(expensesStore.balance) }}</p>
 
