@@ -22,14 +22,13 @@
                         type="text"
                         @input="({ target }) => setFieldValue('name', target?.value ?? '')"
                         v-model="expenseForm.name"
-                        placeholder="Ex.: Prestação do apartamento"
                     />
                 </label>
 
                 <p v-if="errors.name" class="m-0 text-red-500 text-sm">{{ errors.name }}</p>
 
                 <label class="mt-3 input input-bordered flex items-center gap-2 text-sm">
-                    Anotação (opcional): <input
+                    Anotação: <input
                         type="text"
                         v-model="expenseForm.details"
                         class="grow text-sm"
@@ -134,7 +133,7 @@
 
             formData.amount = parseMonetaryString(expenseForm.amount)
             expensesStore.update(selectedExpense.value.id, formData)
-            toast.success('Despesa atualizada com sucesso')
+            toast.success('Despesa atualizada')
             closeDialog()
         }
 

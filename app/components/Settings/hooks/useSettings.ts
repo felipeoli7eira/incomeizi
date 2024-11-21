@@ -26,7 +26,7 @@ export default function useSettings() {
 
         incomeStore.saveIncomeOnLocalStorage()
 
-        toast.success('Renda atualizada com sucesso')
+        toast.success('Renda atualizada')
 
         closeSettingsDialog()
     }

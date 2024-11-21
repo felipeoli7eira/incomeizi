@@ -16,7 +16,7 @@ export default function useCreateExpenseForm() {
       formData.amount = parseMonetaryString(amountModelInput.value)
       expensesStore.create(formData)
       formDialog.value?.close()
-      toast.success('Despesa criada com sucesso')
+      toast.success('Adicionada')
       resetForm()
     }
   }
