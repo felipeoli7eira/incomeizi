@@ -45,7 +45,7 @@
                         <p class="font-semibold text-sm text-right">{{ formatToMonetaryString(expense.amount) }}</p>
                     </div>
 
-                    <p v-if="expense?.details" class="text-xs font-thin mb-2">{{ cutLongDetails(expense?.details) }}</p>
+                    <p v-if="expense?.details" class="text-xs font-normal mb-2">{{ cutLongDetails(expense?.details) }}</p>
 
                     <footer class="flex justify-end gap-5 items-center">
                         <!-- <div class="badge rounded-md p-3" :class="{'badge-success': expense.calculate === 'y', 'badge-error': expense.calculate === 'n'}">
