@@ -53,11 +53,11 @@
                         </div> -->
 
                         <!-- <div class="space-x-1"> -->
-                            <button class="btn btn-sm bg-inherit border-0 p-0" type="button" @click="() => openUpdateExpenseFormDialog(expense.id)">
+                            <button class="btn btn-sm shadow-none hover:bg-inherit bg-inherit border-0 p-0" type="button" @click="() => openUpdateExpenseFormDialog(expense.id)">
                                 <Icon name="lucide:list-collapse" class="icon" />
                             </button>
 
-                            <button class="btn btn-sm bg-inherit border-0 p-0" type="button" @click="() => openDeleteExpenseFormDialog(expense.id)">
+                            <button class="btn btn-sm shadow-none bg-inherit border-0 p-0" type="button" @click="() => openDeleteExpenseFormDialog(expense.id)">
                                 <Icon name="lucide:trash" class="icon" />
                             </button>
                         <!-- </div> -->
