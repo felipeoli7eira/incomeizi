@@ -13,7 +13,7 @@
                     Valor: <input v-model="amountModelInput" v-money="moneySettings" type="text" name="amount" class="grow text-sm" placeholder="Ex.: 1200,00" />
                 </label>
 
-                <VeeForm @submit="create" :validation-schema="validationSchema" class="grid">
+                <VeeForm @submit="create" :validation-schema="validationSchema" class="">
                     <label class="input input-bordered flex items-center gap-2 text-sm">
                         Depesa: <VeeField name="name" type="text" class="grow text-sm" placeholder="Ex.: Aluguel" />
                     </label>
@@ -34,7 +34,7 @@
 
                     <VeeErrorMessage name="calculate" class="m-0 text-red-500 text-sm" />
 
-                    <button type="submit" class="btn btn-primary mt-3">Salvar</button>
+                    <button type="submit" class="btn btn-primary w-full mt-3">Salvar</button>
                 </VeeForm>
 
                 <div class="modal-action">

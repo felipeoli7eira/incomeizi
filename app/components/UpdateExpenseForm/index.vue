@@ -1,6 +1,6 @@
 <template>
     <dialog ref="updateExpenseDialog" id="updateExpenseDialog" class="modal">
-        <div class="modal-box grid">
+        <div class="modal-box">
             <h3 class="text-lg m-0 font-bold">Atualização de dados</h3>
             <p class="pb-4 mt-0 text-sm">Atualize as informações da sua despesa</p>
 
@@ -16,7 +16,7 @@
 
             <p v-if="amountErrorMessage.length" class="m-0 text-red-500 text-sm">{{ amountErrorMessage }}</p>
 
-            <VeeForm @submit="onSubmit" class="grid">
+            <VeeForm @submit="onSubmit" class="">
                 <label class="input input-bordered flex items-center gap-2 text-sm mt-3">
                     Depesa: <input
                         type="text"
@@ -48,7 +48,7 @@
 
                 <p v-if="selectedExpense === null" class="m-0 text-red-400">Desculpe, os dados da despesa selecionada não puderam ser carregados</p>
 
-                <button v-else type="submit" class="btn btn-primary mt-3">Salvar</button>
+                <button v-else type="submit" class="btn btn-primary w-full mt-3">Salvar</button>
             </VeeForm>
 
             <div class="modal-action">

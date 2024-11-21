@@ -1,13 +1,13 @@
 <template>
     <ClientOnly>
-        <div class="flex items-stretch space-x-1 w-full justify-between md:justify-start">
-            <h1 class="text-lg p-2 relative">
+        <div class="flex items-center space-x-1 w-full justify-between md:justify-start">
+            <h1 class="text-lg p-2 relative rounded-full">
                 <p>Saldo: {{ formatToMonetaryString(expensesStore.balance) }}</p>
 
-                <div v-if="!displayBalance" class="backdrop-blur-sm h-full rounded-md bg-white/30 absolute top-0 left-0 right-0 bottom-0"></div>
+                <div v-if="!displayBalance" class="backdrop-blur-sm h-full rounded-full bg-white/30 absolute top-0 left-0 right-0 bottom-0"></div>
             </h1>
 
-            <button @click="changeDisplayBalance" type="button" class="btn btn-primary">
+            <button @click="changeDisplayBalance" type="button" class="btn shadow-none border-none hover:bg-inherit bg-inherit btn-sm p-0">
                 <Icon v-if="!displayBalance" name="lucide:eye" class="icon" />
                 <Icon v-else name="lucide:eye-closed" class="icon" />
             </button>
