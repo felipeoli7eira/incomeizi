@@ -21,7 +21,7 @@
                     <VeeErrorMessage name="name" class="m-0 text-red-500 text-sm" />
 
                     <label class="mt-3 input input-bordered flex items-center gap-2 text-sm">
-                        Anotação: <VeeField name="details" type="text" class="grow text-sm" />
+                        Anotação: <VeeField name="details" type="text" class="grow text-sm w-full" />
                     </label>
 
                     <VeeErrorMessage name="details" class="m-0 text-red-500 text-sm" />

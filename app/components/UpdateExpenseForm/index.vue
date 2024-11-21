@@ -31,7 +31,7 @@
                     Anotação: <input
                         type="text"
                         v-model="expenseForm.details"
-                        class="grow text-sm"
+                        class="grow text-sm w-full"
                         @input="({ target }) => setFieldValue('details', target?.value ?? '')"
                     />
                 </label>

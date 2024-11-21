@@ -36,28 +36,31 @@
 
         <div class="md:hidden space-y-2">
             <div v-for="expense in expensesStore.data" :key="expense.id.concat('sm')" class="card bg-base-100 w-100 shadow-xl">
-                <div class="card-body">
+                <div class="card-body p-4">
                     <div class="mb-2 flex items-center justify-between">
-                        <h2 class="text-sm font-normal">{{ expense.name }}</h2>
+                        <div class="flex items-center gap-1">
+                            <span :class="{'badge-success': expense.calculate === 'y', 'badge-error': expense.calculate === 'n'}" class="circle-status"></span>
+                            <h2 class="text-sm font-normal">{{ expense.name }}</h2>
+                        </div>
                         <p class="font-semibold text-sm text-right">{{ formatToMonetaryString(expense.amount) }}</p>
                     </div>
 
                     <p v-if="expense?.details" class="text-xs font-thin mb-2">{{ cutLongDetails(expense?.details) }}</p>
 
-                    <footer class="flex justify-between items-center">
-                        <div class="badge rounded-md p-3" :class="{'badge-success': expense.calculate === 'y', 'badge-error': expense.calculate === 'n'}">
+                    <footer class="flex justify-end gap-5 items-center">
+                        <!-- <div class="badge rounded-md p-3" :class="{'badge-success': expense.calculate === 'y', 'badge-error': expense.calculate === 'n'}">
                             <Icon name="lucide:calculator" class="icon" />
-                        </div>
+                        </div> -->
 
-                        <div class="space-x-1">
-                            <button class="btn btn-sm" type="button" @click="() => openUpdateExpenseFormDialog(expense.id)">
+                        <!-- <div class="space-x-1"> -->
+                            <button class="btn btn-sm bg-inherit border-0 p-0" type="button" @click="() => openUpdateExpenseFormDialog(expense.id)">
                                 <Icon name="lucide:list-collapse" class="icon" />
                             </button>
 
-                            <button class="btn btn-sm" type="button" @click="() => openDeleteExpenseFormDialog(expense.id)">
+                            <button class="btn btn-sm bg-inherit border-0 p-0" type="button" @click="() => openDeleteExpenseFormDialog(expense.id)">
                                 <Icon name="lucide:trash" class="icon" />
                             </button>
-                        </div>
+                        <!-- </div> -->
                     </footer>
                 </div>
             </div>
@@ -106,3 +109,12 @@
         return details
     }
 </script>
+
+
+<style>
+    .circle-status {
+        width: 5px !important;
+        height: 5px;
+        border-radius: 50%;
+    }
+</style>
