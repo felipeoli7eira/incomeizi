@@ -2,7 +2,7 @@
     <ClientOnly>
         <div id="colorMode-component">
             <button class="btn btn-primary" type="button" onclick="preferColorScheaDialog.showModal()">
-                <Icon name="lucide:sun" class="icon" />
+                <Icon name="lucide:eclipse" class="icon" />
             </button>
 
             <dialog id="preferColorScheaDialog" class="modal">
@@ -10,7 +10,7 @@
                     <h3 class="text-lg font-bold">Tema do aplicativo</h3>
                     <p class="mb-5">Selecione entre os temas disponíveis</p>
 
-                    <div class="flex items-center justify-center gap-2">
+                    <div class="flex flex-col md:flex-row items-strech justify-center gap-2">
                         <button class="btn" type="button" :class="{'btn-active': colorMode.preference === 'light'}" @click="setPreferColorSchema('light')">
                             <Icon name="lucide:sun" class="icon" /> Claro
                         </button>

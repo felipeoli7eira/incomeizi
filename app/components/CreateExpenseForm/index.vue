@@ -1,7 +1,7 @@
 <template>
     <div id="add-expense-form-component">
         <button type="button" class="btn btn-primary" @click="openFormDialog">
-            <Icon name="lucide:circle-plus" class="icon" />
+            <Icon name="lucide:plus" class="icon" />
         </button>
 
         <dialog ref="formDialog" id="createExpenseDialog" class="modal">

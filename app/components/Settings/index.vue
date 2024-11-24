@@ -2,7 +2,7 @@
     <ClientOnly>
         <div class="settings-component">
             <button class="btn btn-primary" type="button" @click="openSettingsDialog">
-                <Icon name="lucide:settings" class="icon" />
+                <Icon name="lucide:wallet-minimal" class="icon" />
             </button>
 
             <dialog ref="settingsDialog" id="settingsDialog" class="modal">
