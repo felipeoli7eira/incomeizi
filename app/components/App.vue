@@ -1,14 +1,17 @@
 <template>
     <div class="mt-5 rounded-md">
+
+        <p v-if="!expensesStore.data.length" class="text-center text-sm">Nenhuma despesa cadastrada.</p>
+
         <div class="shadow-xl rounded-md hidden md:block">
-            <div class="overflow-x-auto">
-                <table class="table">
+            <div v-if="expensesStore.data.length" class="overflow-x-auto">
+                <table class="table table-xs diver-step-5--list-expenses-table">
                     <thead class="text-base">
-                        <tr>
-                            <th>Despesa</th>
-                            <th>Descrição</th>
-                            <th>Valor</th>
-                            <th>Calcular</th>
+                        <tr class="bg-base-200">
+                            <th class="font-normal py-4 text-neutral dark:text-stone-300 rounded-s-xs">Despesa</th>
+                            <th class="font-normal py-4 text-neutral dark:text-stone-300">Descrição</th>
+                            <th class="font-normal py-4 text-neutral dark:text-stone-300">Valor</th>
+                            <th class="font-normal py-4 text-neutral dark:text-stone-300">Calculado</th>
                             <th></th>
                         </tr>
                     </thead>
@@ -34,7 +37,7 @@
             </div>
         </div>
 
-        <div class="md:hidden space-y-2">
+        <div v-if="expensesStore.data.length" class="md:hidden space-y-2">
             <div v-for="expense in expensesStore.data" :key="expense.id.concat('sm')" class="card bg-base-200 w-100 shadow-xl">
                 <div class="card-body p-3">
                     <div class="flex items-center gap-1">
@@ -62,7 +65,7 @@
         </div>
 
         <DeleteExpenseDialog :ulid="expenseToDeleteUlid" />
-        <UpdateExpenseForm :ulid="expenseToUpadeUlid" />
+        <UpdateExpenseForm :ulid="expenseToUpdateUlid" />
     </div>
 </template>
 
@@ -70,14 +73,15 @@
     import { useExpensesStore } from '~/stores/modules/expenses'
     import { Calculate } from '~/Enums/Calculate'
     import { formatToMonetaryString } from '~/helpers/parsers'
+    import useTour from '~/hooks/useTour'
 
     const expensesStore = useExpensesStore()
 
-    const expenseToUpadeUlid = ref('')
+    const expenseToUpdateUlid = ref('')
     const expenseToDeleteUlid = ref('')
 
     function openUpdateExpenseFormDialog(expenseUlid: string) {
-        expenseToUpadeUlid.value = expenseUlid
+        expenseToUpdateUlid.value = expenseUlid
 
         const dialog = document.querySelector('#updateExpenseDialog')
 
@@ -103,6 +107,10 @@
 
         return details
     }
+
+    onMounted(() => {
+        useTour()
+    })
 </script>
 
 
@@ -111,4 +119,33 @@
         width: 7px;
         height: 7px;
     }
+
+    table thead tr th:first-child {
+        border-start-start-radius: 5px !important;
+    }
+
+    table thead tr th:last-child {
+        border-start-end-radius: 5px !important;
+    }
+
+    /* driver overrides */
+
+    /* Class assigned to popover wrapper */
+    /* .driver-popover {} */
+
+    /* Arrow pointing towards the highlighted element */
+    /* .driver-popover-arrow {} */
+
+    /* Title and description */
+    /* .driver-popover-title {}
+    .driver-popover-description {} */
+
+    /* Close button displayed on the top right corner */
+    /* .driver-popover-close-btn {} */
+
+    /* Footer of the popover displaying progress and navigation buttons */
+    /* .driver-popover-footer {}
+    .driver-popover-progress-text {}
+    .driver-popover-prev-btn {}
+    .driver-popover-next-btn {} */
 </style>

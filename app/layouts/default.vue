@@ -5,6 +5,14 @@
             <Header />
 
             <NuxtPage />
+
+            <div class="mt-10 flex justify-center">
+                <nav>
+                    <a href="https://github.com/felipeoli7eira" target="_blank">
+                        <Icon name="lucide:github" class="icon" />
+                    </a>
+                </nav>
+            </div>
         </div>
     </div>
 </template>

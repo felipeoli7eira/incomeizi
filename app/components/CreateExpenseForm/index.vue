@@ -1,6 +1,6 @@
 <template>
     <div id="add-expense-form-component">
-        <button type="button" class="btn btn-primary" @click="openFormDialog">
+        <button type="button" class="btn btn-primary diver-step-2--register-expense-button" @click="openFormDialog">
             <Icon name="lucide:plus" class="icon" />
         </button>
 

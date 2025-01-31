@@ -1,7 +1,7 @@
 <template>
     <ClientOnly>
         <div class="settings-component">
-            <button class="btn btn-primary" type="button" @click="openSettingsDialog">
+            <button class="btn btn-primary diver-step-3--register-income-button" type="button" @click="openSettingsDialog">
                 <Icon name="lucide:wallet-minimal" class="icon" />
             </button>
 
