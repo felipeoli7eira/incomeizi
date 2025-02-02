@@ -9,3 +9,8 @@ export function formatToMonetaryString(value: number): string {
         maximumFractionDigits: 2
     }).format(value)
 }
+
+
+export function maskMonetaryString(value: number): string {
+    return formatToMonetaryString(value).replace(/\d/g, '*')
+  }
