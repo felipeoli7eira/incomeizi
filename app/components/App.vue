@@ -8,10 +8,10 @@
                 <table class="table table-xs diver-step-5--list-expenses-table">
                     <thead class="text-base">
                         <tr class="bg-base-200">
-                            <th class="font-normal py-4 text-neutral dark:text-stone-300 rounded-s-xs">Despesa</th>
-                            <th class="font-normal py-4 text-neutral dark:text-stone-300">Descrição</th>
-                            <th class="font-normal py-4 text-neutral dark:text-stone-300">Valor</th>
-                            <th class="font-normal py-4 text-neutral dark:text-stone-300">Calculado</th>
+                            <th class="font-normal py-4 rounded-s-xs">Despesa</th>
+                            <th class="font-normal py-4">Descrição</th>
+                            <th class="font-normal py-4">Valor</th>
+                            <th class="font-normal py-4">Calculado</th>
                             <th></th>
                         </tr>
                     </thead>

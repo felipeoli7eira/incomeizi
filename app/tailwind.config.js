@@ -2,4 +2,14 @@
 
 module.exports = {
   plugins: [require('daisyui')],
+  daisyui: {
+    themes: [
+      'light',
+      'dark',
+      'sunset',
+      'dracula',
+      'nord',
+      'coffee',
+    ],
+  }
 }
