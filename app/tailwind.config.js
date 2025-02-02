@@ -10,6 +10,8 @@ module.exports = {
       'dracula',
       'nord',
       'coffee',
+      'valentine',
+      'forest',
     ],
   }
 }

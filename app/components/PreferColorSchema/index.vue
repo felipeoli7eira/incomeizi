@@ -24,6 +24,8 @@
                         <button class="btn" :class="{'btn-active': colorMode.preference === 'dracula'}" type="button" @click="setPreferColorSchema('dracula')">Dracula</button>
                         <button class="btn" :class="{'btn-active': colorMode.preference === 'nord'}" type="button" @click="setPreferColorSchema('nord')">Nord</button>
                         <button class="btn" :class="{'btn-active': colorMode.preference === 'coffee'}" type="button" @click="setPreferColorSchema('coffee')">Coffee</button>
+                        <button class="btn" :class="{'btn-active': colorMode.preference === 'valentine'}" type="button" @click="setPreferColorSchema('valentine')">Valentine</button>
+                        <button class="btn" :class="{'btn-active': colorMode.preference === 'forest'}" type="button" @click="setPreferColorSchema('forest')">Forest</button>
                     </div>
 
                     <div class="modal-action">
