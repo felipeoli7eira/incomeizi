@@ -1,27 +1,31 @@
 <template>
     <div class="mt-5 rounded-md">
 
-        <p v-if="!expensesStore.data.length" class="text-center text-sm">Nenhuma despesa cadastrada.</p>
+        <p v-if="!data.length" class="text-center text-sm">Nenhuma despesa cadastrada.</p>
 
         <div class="shadow-xl rounded-md hidden md:block">
-            <div v-if="expensesStore.data.length" class="overflow-x-auto">
+            <div v-if="data.length" class="overflow-x-auto">
                 <table class="table table-xs diver-step-5--list-expenses-table">
                     <thead class="text-base">
                         <tr class="bg-base-200">
                             <th class="font-normal py-4 rounded-s-xs">Despesa</th>
                             <th class="font-normal py-4">Descrição</th>
                             <th class="font-normal py-4">Valor</th>
-                            <th class="font-normal py-4">Calculado</th>
+                            <th class="font-normal py-4">Calculando</th>
                             <th></th>
                         </tr>
                     </thead>
 
                     <tbody class="text-sm">
-                        <tr v-for="expense in expensesStore.data" :key="expense.id.concat('md')">
+                        <tr v-for="expense in data" :key="expense.id.concat('md')">
                             <td>{{ expense.name }}</td>
                             <td>{{ cutLongDetails(expense?.details) }}</td>
                             <td>{{ formatToMonetaryString(expense.amount) }}</td>
-                            <td>{{ Calculate[expense.calculate] }}</td>
+                            <td>
+                                <span class="text-sm badge" :class="{'badge-success':  expense.calculate === 'y', 'badge-error': expense.calculate === 'n'}">
+                                    {{ Calculate[expense.calculate] }}
+                                </span>
+                            </td>
                             <td class="md:space-x-1 space-y-1 md:space-y-0">
                                 <button class="btn btn-sm" @click="() => openUpdateExpenseFormDialog(expense.id)">
                                     <Icon name="lucide:list-collapse" class="icon" />
@@ -37,12 +41,16 @@
             </div>
         </div>
 
-        <div v-if="expensesStore.data.length" class="md:hidden space-y-2">
-            <div v-for="expense in expensesStore.data" :key="expense.id.concat('sm')" class="card bg-base-200 w-100 shadow-xl">
+        <div v-if="data.length" class="md:hidden space-y-2">
+            <div
+                v-for="expense in data"
+                :key="expense.id.concat('sm')"
+                class="card bg-base-200 w-100 shadow-xl">
                 <div class="card-body p-3">
-                    <div class="flex items-center gap-1">
-                        <span :class="{'badge-success': expense.calculate === 'y', 'badge-error': expense.calculate === 'n'}" class="circle-status rounded-full"></span>
+                    <div class="flex items-center gap-1 justify-between">
+                        <!-- <span :class="{'badge-success': expense.calculate === 'y', 'badge-error': expense.calculate === 'n'}" class="circle-status rounded-full"></span> -->
                         <h2 class="text-sm font-medium">{{ expense.name }}</h2>
+                        <span class="text-sm badge" :class="{'badge-success':  expense.calculate === 'y', 'badge-error': expense.calculate === 'n'}">calculando</span>
                     </div>
 
                     <p v-if="expense?.details" class="text-xs font-normal">{{ cutLongDetails(expense?.details) }}</p>
@@ -51,11 +59,11 @@
                         <p class="font-normal text-sm">{{ formatToMonetaryString(expense.amount) }}</p>
 
                         <div class="space-x-1">
-                            <button class="btn btn-sm" type="button" @click="() => openUpdateExpenseFormDialog(expense.id)">
+                            <button class="btn btn-sm shadow-none" type="button" @click="openUpdateExpenseFormDialog(expense.id)">
                                 <Icon name="lucide:list-collapse" class="icon" />
                             </button>
 
-                            <button class="btn btn-sm" type="button" @click="() => openDeleteExpenseFormDialog(expense.id)">
+                            <button class="btn btn-sm shadow-none" type="button" @click="openDeleteExpenseFormDialog(expense.id)">
                                 <Icon name="lucide:trash" class="icon" />
                             </button>
                         </div>
@@ -74,11 +82,14 @@
     import { Calculate } from '~/Enums/Calculate'
     import { formatToMonetaryString } from '~/helpers/parsers'
     import useTour from '~/hooks/useTour'
+    import { type Expense } from '~/types/Expense'
 
     const expensesStore = useExpensesStore()
 
     const expenseToUpdateUlid = ref('')
     const expenseToDeleteUlid = ref('')
+
+    const data = computed(() => [...expensesStore.data].sort((a: Expense, b: Expense) => a.calculate === 'y' ? -1 : 1))
 
     function openUpdateExpenseFormDialog(expenseUlid: string) {
         expenseToUpdateUlid.value = expenseUlid
@@ -108,11 +119,8 @@
         return details
     }
 
-    onMounted(() => {
-        useTour()
-    })
+    onMounted(useTour)
 </script>
-
 
 <style>
     .circle-status {

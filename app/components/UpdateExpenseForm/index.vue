@@ -38,10 +38,16 @@
 
                 <p v-if="errors.details" class="m-0 text-red-500 text-sm">{{ errors.details }}</p>
 
-                <VeeField @change="({ target }) => setFieldValue('calculate', target?.value)" as="select" v-model="expenseForm.calculate" name="calculate" class="mt-3 select select-bordered w-full text-sm">
-                    <option value="y">Sim</option>
-                    <option value="n">Não</option>
-                </VeeField>
+                <label class="form-control w-full mt-3 max-w-xs">
+                    <div class="label m-0 p-0 mb-1">
+                        <span class="label-text">Considerar no calculo?</span>
+                    </div>
+
+                    <VeeField @change="({ target }) => setFieldValue('calculate', target?.value)" as="select" v-model="expenseForm.calculate" name="calculate" class="select select-bordered w-full text-sm">
+                        <option value="y">Sim</option>
+                        <option value="n">Não</option>
+                    </VeeField>
+                </label>
 
                 <p v-if="errors.calculate" class="m-0 text-red-500 text-sm">{{ errors.calculate }}</p>
 
