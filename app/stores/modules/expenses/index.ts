@@ -13,7 +13,11 @@ export const useExpensesStore = defineStore('expenses', () => {
   const incomeStore = useIncomeStore()
 
   const balance = computed((): number => {
-    const expensesSum = data.value.reduce((accumulator: number, currentValue: Expense) => {
+
+    const expenses = data.value.filter(record => record?.type === 'expense')
+    const incomes = data.value.filter(record => record?.type === 'income')
+
+    const expensesSum = expenses.reduce((accumulator: number, currentValue: Expense) => {
       if (Calculate[currentValue.calculate] === Calculate.y) {
         accumulator += currentValue.amount
       }
@@ -21,9 +25,17 @@ export const useExpensesStore = defineStore('expenses', () => {
       return accumulator
     }, 0)
 
-    const income = incomeStore.parsedIncome()
+    const incomesSum = incomes.reduce((accumulator: number, currentValue: Expense) => {
+      if (Calculate[currentValue.calculate] === Calculate.y) {
+        accumulator += currentValue.amount
+      }
 
-    return income - expensesSum
+      return accumulator
+    }, 0)
+
+    const balance = incomeStore.parsedIncome()
+
+    return (balance + incomesSum) - expensesSum
   })
 
   function create(payload: Expense) {

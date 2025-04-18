@@ -1,7 +1,7 @@
 <template>
     <dialog ref="updateExpenseDialog" id="updateExpenseDialog" class="modal">
-        <div class="modal-box">
-            <h3 class="text-lg m-0 font-bold">Atualização de dados</h3>
+        <div class="modal-box border border-primary">
+            <h3 class="text-lg m-0 font-bold">Atualização</h3>
             <p class="pb-4 mt-0 text-sm">Atualize as informações da sua despesa</p>
 
             <label class="mt-3 input input-bordered flex items-center gap-2 text-sm">
@@ -18,7 +18,7 @@
 
             <VeeForm @submit="onSubmit" class="">
                 <label class="input input-bordered flex items-center gap-2 text-sm mt-3">
-                    Depesa: <input
+                    Nome: <input
                         type="text"
                         @input="({ target }) => setFieldValue('name', target?.value ?? '')"
                         v-model="expenseForm.name"
@@ -38,7 +38,7 @@
 
                 <p v-if="errors.details" class="m-0 text-red-500 text-sm">{{ errors.details }}</p>
 
-                <label class="form-control w-full mt-3 max-w-xs">
+                <label class="form-control w-full mt-3">
                     <div class="label m-0 p-0 mb-1">
                         <span class="label-text">Considerar no calculo?</span>
                     </div>
@@ -51,7 +51,20 @@
 
                 <p v-if="errors.calculate" class="m-0 text-red-500 text-sm">{{ errors.calculate }}</p>
 
-                <p v-if="selectedExpense === null" class="m-0 text-red-400">Desculpe, os dados da despesa selecionada não puderam ser carregados</p>
+                <label class="form-control w-full mt-3">
+                    <div class="label m-0 p-0 mb-1">
+                        <span class="label-text">Despesa ou receita? selecione</span>
+                    </div>
+
+                    <VeeField @change="({ target }) => setFieldValue('type', target?.value)" as="select" v-model="expenseForm.type" name="type" class="select select-bordered w-full text-sm">
+                        <option value="expense">Despesa</option>
+                        <option value="income">Receita</option>
+                    </VeeField>
+                </label>
+
+                <p v-if="errors.type" class="m-0 text-red-500 text-sm">{{ errors.type }}</p>
+
+                <p v-if="selectedExpense === null" class="m-0 text-red-400">Desculpe, os dados não puderam ser carregados</p>
 
                 <button v-else type="submit" class="btn btn-primary w-full mt-3">Salvar</button>
             </VeeForm>
@@ -91,6 +104,7 @@
         details: '',
         amount: '0,00',
         calculate: '',
+        type: '',
         id: ''
     })
     const amountErrorMessage = ref('')
@@ -104,7 +118,8 @@
                 .min(3, {message: 'Este campo deve ter no mínimo 3 letras'})
                 .max(20, {message: 'Este campo deve ter no máximo 20 letras'}),
             details: z.optional(z.string()),
-            calculate: z.enum(['y', 'n'], {message: 'Escolha entre as opções disponíveis'})
+            calculate: z.enum(['y', 'n'], {message: 'Escolha entre as opções disponíveis'}),
+            type: z.enum(['expense', 'income'], {message: 'Escolha entre as opções disponíveis'}),
         }))
     })
 
@@ -113,13 +128,15 @@
             setValues({
                 name: selected.name,
                 details: selected.details,
-                calculate: selected.calculate
+                calculate: selected.calculate,
+                type: selected.type
             })
 
             expenseForm.name = selected.name
             expenseForm.details = selected.details
             expenseForm.amount = formatToMonetaryString(selected.amount)
             expenseForm.calculate = selected.calculate
+            expenseForm.type = selected?.type
             expenseForm.id = selected.id
         }
     })

@@ -4,4 +4,5 @@ export type Expense = {
     details: string;
     amount: number;
     calculate: 'y' | 'n';
+    type: 'expense' | 'income';
 };
