@@ -2,7 +2,7 @@
     <ClientOnly>
         <div id="colorMode-component">
             <button class="btn btn-primary diver-step-4--change-theme-button" type="button" onclick="preferColorScheaDialog.showModal()">
-                <Icon name="lucide:eclipse" class="icon" />
+                <Icon name="lucide:paint-roller" class="icon" />
             </button>
 
             <dialog id="preferColorScheaDialog" class="modal">

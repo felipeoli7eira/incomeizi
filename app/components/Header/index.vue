@@ -1,5 +1,5 @@
 <template>
-    <header class="flex justify-between items-end flex-col space-y-2 md:flex-row md:space-y-0">
+    <header class="flex flex-col md:flex-row justify-between items-end md:items-center gap-3">
         <Balance />
 
         <div class="flex gap-x-1">

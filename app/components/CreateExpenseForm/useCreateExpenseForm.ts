@@ -1,4 +1,4 @@
-import { useExpensesStore } from "../../../stores/modules/expenses/index";
+import { useExpensesStore } from "~/stores/expenses/index";
 import { type Expense } from "~/types/Expense";
 import { toast } from "@steveyuowo/vue-hot-toast";
 import { parseMonetaryString } from "~/helpers/parsers";
@@ -12,8 +12,6 @@ export default function useCreateExpenseForm() {
   const amountErrorMessage = ref("");
 
   function create(formData: Expense): void {
-    console.log(formData);
-
     if (!validAmount()) {
       amountErrorMessage.value = "Defina um valor para esse item";
       return;
@@ -28,22 +26,18 @@ export default function useCreateExpenseForm() {
 
   function validAmount(): boolean {
     if (isZeroStringValue(amountModelInput.value)) {
-      displayErrorMessage("O valor da despesa deve ser maior que zero");
+      amountErrorMessage.value = "O valor da despesa deve ser maior que zero";
       return false;
     }
 
     const numericValue = parseMonetaryString(amountModelInput.value);
 
     if (isZeroNumberValue(numericValue)) {
-      displayErrorMessage("O valor da despesa deve ser um valor numérico");
+      amountErrorMessage.value = "O valor da despesa deve ser um valor numérico";
       return false;
     }
 
     return true;
-  }
-
-  function displayErrorMessage(message: string): void {
-    amountErrorMessage.value = message;
   }
 
   function openFormDialog(): void {
@@ -56,10 +50,11 @@ export default function useCreateExpenseForm() {
   }
 
   function resetForm(): void {
-    const form = document.querySelector("#createExpenseDialog form");
+    const form: HTMLFormElement | null = document.querySelector(
+      "#createExpenseDialog form"
+    );
 
     if (form) {
-      amountErrorMessage.value = "";
       form.reset();
     }
 

@@ -7,18 +7,19 @@
 
             <dialog ref="settingsDialog" id="settingsDialog" class="modal">
                 <div class="modal-box">
-                    <h3 class="text-lg font-bold">Configurações</h3>
-                    <p class="mb-5">Defina a renda que será usada para calcular os gastos</p>
+                    <h3 class="text-lg font-bold">Renda principal</h3>
+                    <p class="mb-5 text-sm">Será usada para subtrair os gastos, somar com as receitas e calcular o saldo final.</p>
                     <form @submit.prevent="onSubmit">
                         <input
+                            name="amount"
                             v-money="moneySettings"
                             type="text"
                             class="input input-bordered w-full"
-                            placeholder="Ex.: 1200,00"
-                            v-model="incomeModelInput"
+                            placeholder="Ex.: 1.200,00"
+                            v-model="inputModel"
                         />
 
-                        <p class="text-red-500" v-if="incomeErrorMessage">{{ incomeErrorMessage }}</p>
+                        <p class="text-red-500" v-if="errorMessage">{{ errorMessage }}</p>
 
                         <button type="submit" class="btn btn-primary w-full mt-5">Salvar</button>
                     </form>
@@ -36,16 +37,21 @@
 
 
 <script lang="ts" setup>
-    import useSettings from './hooks/useSettings'
+import useSettings from './useSettings'
 
-    const {
-        moneySettings,
-        incomeErrorMessage,
-        incomeStore,
-        settingsDialog,
-        incomeModelInput,
+import { onMounted } from 'vue'
 
-        onSubmit,
-        openSettingsDialog
-    } = useSettings()
+const {
+    moneySettings,
+    errorMessage,
+    settingsDialog,
+    inputModel,
+
+    onSubmit,
+    openSettingsDialog,
+
+    onComponentMounted,
+} = useSettings()
+
+onMounted(onComponentMounted)
 </script>

@@ -28,7 +28,8 @@
                             <td>{{ cutLongDetails(expense?.details) }}</td>
                             <td>{{ formatToMonetaryString(expense.amount) }}</td>
                             <td>
-                                <span v-if="expense?.type === undefined" class="text-sm badge badge-ghost">Não classificado</span>
+                                <span v-if="expense?.type === undefined" class="text-sm badge badge-ghost">Não
+                                    classificado</span>
 
                                 <span v-else class="text-sm badge" :class="{ 'badge-success': expense.calculate === 'y', 'badge-error': expense.calculate === 'n' }">
                                     {{ Calculate[expense.calculate] }}
@@ -39,8 +40,7 @@
                                     <Icon name="lucide:list-collapse" class="icon" />
                                 </button>
 
-                                <button type="button" class="btn btn-sm"
-                                    @click="() => openDeleteExpenseFormDialog(expense.id)">
+                                <button type="button" class="btn btn-sm" @click="() => openDeleteExpenseFormDialog(expense.id)">
                                     <Icon name="lucide:trash" class="icon" />
                                 </button>
                             </td>
@@ -56,9 +56,7 @@
                     <div class="flex items-center gap-1 justify-between">
                         <h2 class="text-sm font-medium">{{ expense.name }}</h2>
 
-                        <span
-                        class="text-sm badge"
-                        :class="{
+                        <span class="text-sm badge" :class="{
                             'badge-outline badge-ghost': expense?.type === undefined,
                             'badge-success': expense?.type !== undefined && expense.calculate === 'y',
                             'badge-error': expense?.type !== undefined && expense.calculate === 'n'
@@ -69,8 +67,10 @@
 
                     <footer class="flex justify-between items-center">
                         <p class="font-normal text-sm flex gap-2">
-                            <Icon v-if="expense?.type === 'income'" name="lucide:arrow-up-to-line" class="icon text-success" />
-                            <Icon v-else-if="expense?.type === 'expense'" name="lucide:arrow-down-to-line" class="icon text-error" />
+                            <Icon v-if="expense?.type === 'income'" name="lucide:arrow-up-to-line"
+                                class="icon text-success" />
+                            <Icon v-else-if="expense?.type === 'expense'" name="lucide:arrow-down-to-line"
+                                class="icon text-error" />
                             <Icon v-else name="lucide:asterisk" class="icon text-gray-500" />
 
                             {{ formatToMonetaryString(expense.amount) }}
@@ -98,7 +98,7 @@
 </template>
 
 <script lang="ts" setup>
-import { useExpensesStore } from '~/stores/modules/expenses'
+import { useExpensesStore } from '~/stores/expenses'
 import { Calculate } from '~/Enums/Calculate'
 import { formatToMonetaryString } from '~/helpers/parsers'
 import useTour from '~/hooks/useTour'

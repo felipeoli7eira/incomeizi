@@ -1,42 +1,37 @@
 <template>
     <ClientOnly>
-        <div class="flex items-center space-x-1 w-full justify-between md:justify-start">
-            <h1 class="text-lg p-2 relative rounded-full diver-step-1--balance">
-                <p>Saldo: {{ displayBalance ? formatToMonetaryString(expensesStore.balance) : maskMonetaryString(expensesStore.balance) }}</p>
+        <div id="balance-component" class="w-full flex items-center gap-2">
+            <h1 class="text-lg">
+                {{ showBalance ? formatToMonetaryString(expensesStore.balance) :
+                    maskMonetaryString(expensesStore.balance) }}
             </h1>
 
-            <button @click="changeDisplayBalance" type="button" class="btn shadow-none border-none hover:bg-inherit bg-inherit btn-sm p-0">
-                <Icon v-if="!displayBalance" name="lucide:eye" class="icon" />
-                <Icon v-else name="lucide:eye-closed" class="icon" />
+            <button @click="toggleShowBalance" type="button"
+                class="btn shadow-none border-none hover:bg-inherit bg-inherit btn-sm p-0">
+                <Icon v-if="showBalance" name="lucide:eye-closed" class="icon" />
+                <Icon v-else name="lucide:eye" class="icon" />
             </button>
         </div>
     </ClientOnly>
 </template>
 
 <script setup lang="ts">
-    import { useExpensesStore } from '~/stores/modules/expenses'
-    import nuxtStorage from 'nuxt-storage'
-    import { formatToMonetaryString, maskMonetaryString } from '~/helpers/parsers'
+import { useExpensesStore } from '~/stores/expenses'
+import { formatToMonetaryString, maskMonetaryString } from '~/helpers/parsers'
+const expensesStore = useExpensesStore()
 
-    const displayBalance = ref(false)
-    const expensesStore = useExpensesStore()
+import useBalance from "~/components/Balance/useBalance";
+import { useIncomeStore } from "~/stores/income";
 
-    const DISPLAY_BALANCE_PREFERENCE_KEY = 'INCOMEIZI_DISPLAY_BALANCE_STATE_PREFERENCE'
+import { onMounted } from "vue";
 
-    function changeDisplayBalance(): void {
-        displayBalance.value = !displayBalance.value
-        saveDisplayBalancePreferenceStateOnLocalStorage()
-    }
+const {
+    showBalance,
+    toggleShowBalance,
+    onComponentMounted,
+} = useBalance()
 
-    function saveDisplayBalancePreferenceStateOnLocalStorage(): void {
-        nuxtStorage.localStorage.setData(DISPLAY_BALANCE_PREFERENCE_KEY, displayBalance.value, 325 * 2, 'd')
-    }
+const { income, formatIncome } = useIncomeStore()
 
-    onMounted((): void => {
-        const displayBalanceSavedPreference = nuxtStorage.localStorage.getData(DISPLAY_BALANCE_PREFERENCE_KEY)
-
-        if (displayBalanceSavedPreference) {
-            displayBalance.value = displayBalanceSavedPreference
-        }
-    })
+onMounted(onComponentMounted)
 </script>

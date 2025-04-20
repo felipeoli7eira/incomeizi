@@ -1,11 +1,11 @@
 <template>
     <div id="add-expense-form-component">
         <button type="button" class="btn btn-primary diver-step-2--register-expense-button" @click="openFormDialog">
-            <Icon name="lucide:plus" class="icon" />
+            <Icon name="lucide:list-plus" class="icon" />
         </button>
 
         <dialog ref="formDialog" id="createExpenseDialog" class="modal">
-            <div class="modal-box border border-primary">
+            <div class="modal-box">
                 <h3 class="text-lg font-bold">Cadastro</h3>
                 <p class="pb-4">Cadastre uma despesa / receita</p>
 
@@ -61,7 +61,7 @@
 <script setup lang="ts">
     import { moneySettings } from '~/plugins/v-money'
     import { validationSchema } from "./schema";
-    import useCreateExpenseForm from "./hooks/useCreateExpenseForm";
+    import useCreateExpenseForm from "./useCreateExpenseForm";
 
     const {
         amountModelInput,
